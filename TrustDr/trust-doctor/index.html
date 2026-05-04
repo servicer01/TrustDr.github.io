@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trust Doctor — Rockefeller Blueprint Edition</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <div class="app" id="app">
+    <div class="hdr">
+      <div class="crest">
+        <svg viewBox="0 0 24 24" fill="white" width="24" height="24">
+          <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+        </svg>
+      </div>
+      <div class="htxt">
+        <h1>Trust Doctor</h1>
+        <p>Rockefeller Blueprint Edition &mdash; Pro Se Trust Framework</p>
+      </div>
+    </div>
+
+    <div class="top-bar">
+      <div class="prog" id="prog"></div>
+      <div class="sess">
+        <span id="tok-ctr" class="tok-ctr" title="Session token usage"></span>
+        <select id="model-sel" class="model-sel" title="AI model">
+          <option value="gemini-2.5-flash">Flash 2.5 ⚡</option>
+          <option value="gemini-2.5-pro">Pro 2.5 ✦</option>
+          <option value="gemini-2.0-flash">Flash 2.0</option>
+        </select>
+        <button class="sbtn g" id="sv">Save</button>
+        <button class="sbtn" id="ld">Load</button>
+        <button class="sbtn intel" id="view-intel">Data insights</button>
+      </div>
+    </div>
+
+    <div class="prose-notice">
+      <strong>Your right, your document.</strong>
+      A trust is a private contract between private parties &mdash; no court filing required.
+      Established under 28 U.S.C. &sect; 1654 and affirmed in <em>Faretta v. California</em>, 422 U.S. 806 (1975).
+      Professional review by an estate attorney and CPA is strongly encouraged before execution.
+    </div>
+
+    <div class="intel-banner" id="intel-banner"></div>
+    <div id="body"></div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- Post-payment success overlay -->
+  <div class="pay-success-overlay" id="pay-success-overlay" style="display:none">
+    <div class="pay-success-card">
+      <div class="pay-success-check">✓</div>
+      <h2 class="pay-success-title">Payment confirmed!</h2>
+      <p class="pay-success-body">
+        Your full trust framework is downloading now.<br>
+        A copy has also been sent to your email.
+      </p>
+      <button class="btn pri pay-success-dl" onclick="downloadTrustDocument(S); showToast('Downloading…')">
+        Download again
+      </button>
+      <button class="pay-success-close" onclick="closePaySuccess()">View document ↓</button>
+    </div>
+  </div>
+
+  <!-- Paywall modal -->
+  <div class="pw-modal" id="pw-modal" style="display:none" onclick="if(event.target===this)closePaywallModal()">
+    <div class="pw-card">
+      <button class="pw-close" onclick="closePaywallModal()">✕</button>
+      <div class="pw-icon">🔒</div>
+      <h2 class="pw-title">Unlock full document download</h2>
+      <p class="pw-body">
+        Your trust framework is ready. The preview shows the first 2 pages.
+        Unlock the complete document — all articles, signature block, and Schedule A —
+        as a downloadable file for a one-time payment.
+      </p>
+      <ul class="pw-list">
+        <li>✓ Complete trust framework document</li>
+        <li>✓ All articles, clauses &amp; Schedule A</li>
+        <li>✓ Formatted for printing &amp; execution</li>
+        <li>✓ One-time fee, no subscription</li>
+      </ul>
+      <button class="btn pri pw-cta" onclick="paywallCheckout()">Unlock for $19 →</button>
+      <button class="pw-verify-link" onclick="paywallVerify()">Already paid on this device?</button>
+    </div>
+  </div>
+
+  <!-- Config: set your Anthropic API key via environment or proxy -->
+  <script>
+    window.TD_CONFIG = {
+      // In production, route through a backend proxy instead of exposing key here.
+      // Set ANTHROPIC_API_KEY in your server environment and proxy /api/messages.
+      API_ENDPOINT: '/api/messages',   // swap to 'https://api.anthropic.com/v1/messages' for direct (dev only)
+      MODEL: 'gemini-2.5-flash',
+      MAX_TOKENS: 1000
+    };
+  </script>
+
+  <script>
+    document.getElementById('model-sel').addEventListener('change', function () {
+      window.TD_CONFIG.MODEL = this.value;
+      const labels = { 'gemini-2.5-flash': 'Flash 2.5', 'gemini-2.5-pro': 'Pro 2.5', 'gemini-2.0-flash': 'Flash 2.0' };
+      const t = document.getElementById('toast');
+      if (t) { t.textContent = 'Model: ' + (labels[this.value] || this.value); t.className = 'toast show'; setTimeout(() => t.className = 'toast', 2000); }
+    });
+  </script>
+  <script src="js/constants.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/data-engine.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/steps.js"></script>
+  <script src="js/tabs.js"></script>
+  <script src="js/doc-review.js"></script>
+  <script src="js/intel-dashboard.js"></script>
+  <script src="js/paywall.js"></script>
+  <script src="js/pdf.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
